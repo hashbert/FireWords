@@ -4,8 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 
-public class ClueGenerator : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     [SerializeField] private List<Clue> Clues;
     [SerializeField] private List<Transform> SpawnLocations;
@@ -13,10 +14,13 @@ public class ClueGenerator : MonoBehaviour
     [SerializeField] private GameObject _tilePrefab;
     [SerializeField] private GameObject _dummySpawnPanelArea;
 
+    [SerializeField] private GameObject _answerPanelPrefab;
+    [SerializeField] private GameObject _letterSlotPrefab;
+
     void Start()
     {
         StartCoroutine(DisplayRandomClue());
-        CreateLetterBlanks();
+        CreatePuzzleSlots();
     }
 
     private IEnumerator DisplayRandomClue()
@@ -31,7 +35,7 @@ public class ClueGenerator : MonoBehaviour
         {
             if (letter.Equals((char)32)) continue; // skip spaces
 
-            //create a tile
+            //create tile
             _tilePrefab.GetComponentInChildren<TextMeshProUGUI>().text = letter.ToString();
             GameObject letterTile = Instantiate(_tilePrefab);
             letterTile.transform.SetParent(_dummySpawnPanelArea.transform);
@@ -44,9 +48,10 @@ public class ClueGenerator : MonoBehaviour
 
         Clues.RemoveAt(randClueNum);
     }
-    private void CreateLetterBlanks()
+
+    private void CreatePuzzleSlots()
     {
-        throw new NotImplementedException();
+        GameObject answerPrefab = Instantiate(_answerPanelPrefab);
     }
 
 }
